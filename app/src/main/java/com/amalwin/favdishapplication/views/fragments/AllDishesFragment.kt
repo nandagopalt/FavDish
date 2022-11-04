@@ -2,29 +2,24 @@ package com.amalwin.favdishapplication.views.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import com.amalwin.favdishapplication.R
 import com.amalwin.favdishapplication.application.FavDishApplication
 import com.amalwin.favdishapplication.databinding.FragmentAllDishesBinding
+import com.amalwin.favdishapplication.model.entities.FavDish
 import com.amalwin.favdishapplication.viewmodel.FavDishAddUpdateViewModel
 import com.amalwin.favdishapplication.viewmodel.FavDishAddUpdateViewModelFactory
-import com.amalwin.favdishapplication.viewmodel.HomeViewModel
 import com.amalwin.favdishapplication.views.activities.AddUpdateDishActivity
+import com.amalwin.favdishapplication.views.adapters.AllDishListItemsAdapter
 
 class AllDishesFragment : Fragment() {
 
-    private var _binding: FragmentAllDishesBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
-
-
+    private lateinit var allDishesBinding: FragmentAllDishesBinding
+    private lateinit var allDishListItemAdapter: AllDishListItemsAdapter
     private val favDishAddUpdateViewModel: FavDishAddUpdateViewModel by viewModels {
         FavDishAddUpdateViewModelFactory((requireActivity().application as FavDishApplication).repository)
     }
@@ -33,7 +28,6 @@ class AllDishesFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-
     }
 
     override fun onCreateView(
@@ -41,31 +35,36 @@ class AllDishesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+        allDishesBinding =
+            FragmentAllDishesBinding.inflate(inflater, container, false)
+        return allDishesBinding.root
+    }
 
-        _binding = FragmentAllDishesBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        allDishesBinding.rvAllDish.layoutManager = GridLayoutManager(requireActivity(), 2)
+        allDishListItemAdapter = AllDishListItemsAdapter { selectedFavDish: FavDish ->
+            onListItemSelectionListener(selectedFavDish)
         }
+        allDishesBinding.rvAllDish.adapter = allDishListItemAdapter
 
         favDishAddUpdateViewModel.favDishItemsList.observe(viewLifecycleOwner) {
-            it.let {
-                for (item in it) {
-                    Log.i("FavDish", "${item.id} :: ${item.title}")
+            it.let { dishes ->
+                if (dishes.isEmpty()) {
+                    allDishesBinding.rvAllDish.visibility = View.GONE
+                    allDishesBinding.tvDishYetToAdd.visibility = View.VISIBLE
+                } else {
+                    allDishesBinding.rvAllDish.visibility = View.VISIBLE
+                    allDishesBinding.tvDishYetToAdd.visibility = View.GONE
+                    allDishListItemAdapter.reLoadAllDishList(dishes)
                 }
             }
         }
-
-        return root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
     }
 
     @Suppress("DEPRECATION")
@@ -84,4 +83,9 @@ class AllDishesFragment : Fragment() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    fun onListItemSelectionListener(favDish: FavDish) {
+        Toast.makeText(requireActivity(), favDish.title, Toast.LENGTH_LONG).show()
+    }
+
 }
