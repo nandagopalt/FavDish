@@ -6,8 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
-class FavoriteDishFragment : Fragment() {
-
+class FavoriteDishesFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
