@@ -1,10 +1,14 @@
 package com.amalwin.favdishapplication.model.entities
 
+
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "fav_dish_table")
+@Parcelize
 data class FavDish(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id") val id: Int = 0,
@@ -17,5 +21,5 @@ data class FavDish(
     @ColumnInfo(name = "cooking_time") val cookingTime: String,
     @ColumnInfo(name = "instructions") val instructions: String,
     @ColumnInfo(name = "is_fav_dish") val isFavDish: Boolean
-)
+): Parcelable
 

@@ -6,6 +6,8 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.amalwin.favdishapplication.R
 import com.amalwin.favdishapplication.application.FavDishApplication
@@ -14,6 +16,7 @@ import com.amalwin.favdishapplication.model.entities.FavDish
 import com.amalwin.favdishapplication.viewmodel.FavDishAddUpdateViewModel
 import com.amalwin.favdishapplication.viewmodel.FavDishAddUpdateViewModelFactory
 import com.amalwin.favdishapplication.views.activities.AddUpdateDishActivity
+import com.amalwin.favdishapplication.views.activities.MainActivity
 import com.amalwin.favdishapplication.views.adapters.AllDishListItemsAdapter
 
 class AllDishesFragment : Fragment() {
@@ -86,6 +89,13 @@ class AllDishesFragment : Fragment() {
 
     fun onListItemSelectionListener(favDish: FavDish) {
         Toast.makeText(requireActivity(), favDish.title, Toast.LENGTH_LONG).show()
+        val action = AllDishesFragmentDirections.actionNavigationAllDishesToDishDetailsFragment(favDish)
+        findNavController().navigate(action)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as MainActivity).showBottomNavView()
     }
 
 }
