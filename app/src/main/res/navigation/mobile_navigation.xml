@@ -29,7 +29,7 @@
     <fragment
         android:id="@+id/dishDetailsFragment"
         android:name="com.amalwin.favdishapplication.views.fragments.DishDetailsFragment"
-        android:label="fragment_dish_details"
+        android:label="Dish Details"
         tools:layout="@layout/fragment_dish_details">
         <argument
             android:name="fav_dish"

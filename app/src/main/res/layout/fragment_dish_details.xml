@@ -1,18 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fadeScrollbars="true"
+    android:fillViewport="true"
+    android:scrollbars="vertical"
     tools:context=".views.fragments.DishDetailsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/tv_dish_details_title"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/hello_blank_fragment"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_16sdp" />
+        android:layout_height="wrap_content">
 
-</LinearLayout>
+        <FrameLayout
+            android:id="@+id/fl_dish_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp">
+
+            <ImageView
+                android:id="@+id/iv_dish_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/darker_gray"
+                android:contentDescription="null"
+                android:scaleType="fitXY" />
+
+            <LinearLayout
+                android:id="@+id/ll_favorite_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_margin="@dimen/_5sdp"
+                android:foreground="?attr/selectableItemBackground"
+                android:background="@drawable/favorite_button_background"
+                android:orientation="vertical"
+                android:padding="@dimen/_5sdp">
+
+                <ImageView
+                    android:id="@+id/iv_favorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="null"
+                    android:gravity="top|end"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_favorite_unselected" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_dish_details_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fl_dish_image"
+            android:layout_margin="@dimen/_12sdp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_12sdp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_dish_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_12sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp"
+                android:textStyle="bold"
+                tools:text="Dish Title" />
+
+            <TextView
+                android:id="@+id/tv_dish_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_1sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp"
+                android:text="Type" />
+
+            <TextView
+                android:id="@+id/tv_dish_type_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_12sdp"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="@dimen/_16sdp"
+                android:text="Type Value" />
+
+            <TextView
+                android:id="@+id/tv_dish_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_1sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp"
+                android:text="Category" />
+
+            <TextView
+                android:id="@+id/tv_dish_category_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_12sdp"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="@dimen/_16sdp"
+                android:text="Category Value" />
+
+            <TextView
+                android:id="@+id/tv_dish_ingredients"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_1sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp"
+                android:text="Ingredients" />
+
+            <TextView
+                android:id="@+id/tv_dish_ingredients_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_12sdp"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="@dimen/_16sdp"
+                android:text="Ingredients Value" />
+
+            <TextView
+                android:id="@+id/tv_dish_directions_to_cook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_1sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp"
+                android:text="Directions to Cook" />
+
+            <TextView
+                android:id="@+id/tv_dish_directions_to_cook_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_12sdp"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="@dimen/_16sdp"
+                android:text="Directions to cook Value" />
+
+            <TextView
+                android:id="@+id/tv_time_for_dish_preparation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_12sdp"
+                android:gravity="center"
+                android:text="@string/time_for_preparation"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="@dimen/_16sdp" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+</ScrollView>
