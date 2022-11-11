@@ -1,16 +1,23 @@
 package com.amalwin.favdishapplication.views.fragments
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import androidx.palette.graphics.Palette
 import com.amalwin.favdishapplication.R
 import com.amalwin.favdishapplication.databinding.FragmentDishDetailsBinding
 import com.amalwin.favdishapplication.views.activities.MainActivity
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import java.io.IOException
 
 
@@ -19,7 +26,6 @@ class DishDetailsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -40,6 +46,36 @@ class DishDetailsFragment : Fragment() {
                 try {
                     Glide.with(ivDishImage.context)
                         .load(it.imagePath)
+                        .listener(object : RequestListener<Drawable> {
+                            override fun onLoadFailed(
+                                e: GlideException?,
+                                model: Any?,
+                                target: Target<Drawable>?,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                return false
+                            }
+
+                            override fun onResourceReady(
+                                resource: Drawable?,
+                                model: Any?,
+                                target: Target<Drawable>?,
+                                dataSource: DataSource?,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                resource.let {
+                                    Palette.from(it!!.toBitmap()).generate { palette ->
+                                        palette.let {
+                                            val color = it!!.vibrantSwatch?.rgb ?: 0
+                                            dishDetailsBinding?.flDishDetailsParent?.setBackgroundColor(
+                                                color
+                                            )
+                                        }
+                                    }
+                                }
+                                return false
+                            }
+                        })
                         .centerCrop()
                         .into(ivDishImage)
                 } catch (e: IOException) {
