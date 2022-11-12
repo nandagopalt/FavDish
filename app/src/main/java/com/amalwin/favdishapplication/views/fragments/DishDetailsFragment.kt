@@ -6,12 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.palette.graphics.Palette
 import com.amalwin.favdishapplication.R
+import com.amalwin.favdishapplication.application.FavDishApplication
 import com.amalwin.favdishapplication.databinding.FragmentDishDetailsBinding
+import com.amalwin.favdishapplication.viewmodel.FavDishAddUpdateViewModel
+import com.amalwin.favdishapplication.viewmodel.FavDishAddUpdateViewModelFactory
 import com.amalwin.favdishapplication.views.activities.MainActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -23,6 +29,9 @@ import java.io.IOException
 
 class DishDetailsFragment : Fragment() {
     private var dishDetailsBinding: FragmentDishDetailsBinding? = null
+    private val favDishAddUpdateViewModel: FavDishAddUpdateViewModel by viewModels {
+        FavDishAddUpdateViewModelFactory((requireActivity().application as FavDishApplication).repository)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,13 +98,63 @@ class DishDetailsFragment : Fragment() {
                 tvDishDirectionsToCookValue.text = it.instructions
                 tvTimeForDishPreparation.text =
                     resources.getString(R.string.time_for_preparation, it.cookingTime)
+                if (args.favDish.isFavDish) {
+                    dishDetailsBinding
+                        ?.ivFavorite
+                        ?.setImageDrawable(
+                            AppCompatResources.getDrawable(
+                                requireActivity(),
+                                R.drawable.ic_favorite_selected
+                            )
+                        )
+                } else {
+                    dishDetailsBinding
+                        ?.ivFavorite
+                        ?.setImageDrawable(
+                            ContextCompat.getDrawable(
+                                requireActivity(),
+                                R.drawable.ic_favorite_unselected
+                            )
+                        )
+                }
+
                 llFavoriteParent.setOnClickListener {
-                    Toast.makeText(requireActivity(), "Favorite clicked !", Toast.LENGTH_LONG)
-                        .show()
+                    args.favDish.isFavDish = !args.favDish.isFavDish
+                    favDishAddUpdateViewModel.updateFavDishDetails(args.favDish)
+                    if (args.favDish.isFavDish) {
+                        dishDetailsBinding
+                            ?.ivFavorite
+                            ?.setImageDrawable(
+                                AppCompatResources.getDrawable(
+                                    requireActivity(),
+                                    R.drawable.ic_favorite_selected
+                                )
+                            )
+                        Toast.makeText(
+                            requireActivity(),
+                            "Dish added favorite !",
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                    } else {
+                        dishDetailsBinding
+                            ?.ivFavorite
+                            ?.setImageDrawable(
+                                ContextCompat.getDrawable(
+                                    requireActivity(),
+                                    R.drawable.ic_favorite_unselected
+                                )
+                            )
+                        Toast.makeText(
+                            requireActivity(),
+                            "Dish removed favorite !",
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                    }
                 }
             }
         }
-
     }
 
     override fun onDestroy() {

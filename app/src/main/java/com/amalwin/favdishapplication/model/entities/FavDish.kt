@@ -20,6 +20,6 @@ data class FavDish(
     @ColumnInfo(name = "ingredients") val ingredients: String,
     @ColumnInfo(name = "cooking_time") val cookingTime: String,
     @ColumnInfo(name = "instructions") val instructions: String,
-    @ColumnInfo(name = "is_fav_dish") val isFavDish: Boolean
+    @ColumnInfo(name = "is_fav_dish") var isFavDish: Boolean
 ): Parcelable
 
