@@ -1,6 +1,7 @@
 package com.amalwin.favdishapplication.views.activities
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -42,12 +43,16 @@ class MainActivity : AppCompatActivity() {
 
     fun hideBottomNavView() {
         binding.navView.clearAnimation()
-        binding.navView.animate().translationY(binding.navView.height.toFloat()).setDuration(300)
+        binding.navView.animate()
+            .translationY(binding.navView.height.toFloat()).setDuration(300)
+        binding.navView.visibility = View.GONE
     }
 
     fun showBottomNavView() {
         binding.navView.clearAnimation()
         binding.navView.animate().translationY(0F).setDuration(300)
+        binding.navView.visibility = View.VISIBLE
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

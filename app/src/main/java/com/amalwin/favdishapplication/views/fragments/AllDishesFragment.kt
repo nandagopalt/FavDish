@@ -91,6 +91,7 @@ class AllDishesFragment : Fragment() {
         Toast.makeText(requireActivity(), favDish.title, Toast.LENGTH_LONG).show()
         val action = AllDishesFragmentDirections.actionNavigationAllDishesToDishDetailsFragment(favDish)
         findNavController().navigate(action)
+
     }
 
     override fun onResume() {

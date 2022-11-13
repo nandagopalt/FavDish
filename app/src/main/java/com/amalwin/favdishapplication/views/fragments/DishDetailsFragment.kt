@@ -48,8 +48,9 @@ class DishDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (requireActivity() as MainActivity).hideBottomNavView()
         val args: DishDetailsFragmentArgs by navArgs()
+        if (requireActivity() is MainActivity)
+            (requireActivity() as MainActivity).hideBottomNavView()
         args.favDish.let {
             dishDetailsBinding?.apply {
                 try {

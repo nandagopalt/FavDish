@@ -14,6 +14,7 @@ import com.amalwin.favdishapplication.databinding.FragmentFavoriteDishesBinding
 import com.amalwin.favdishapplication.model.entities.FavDish
 import com.amalwin.favdishapplication.viewmodel.FavoriteDishViewModel
 import com.amalwin.favdishapplication.viewmodel.FavoriteDishViewModelProvider
+import com.amalwin.favdishapplication.views.activities.MainActivity
 import com.amalwin.favdishapplication.views.adapters.AllDishListItemsAdapter
 
 class FavoriteDishesFragment : Fragment() {
@@ -63,13 +64,24 @@ class FavoriteDishesFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (requireActivity() is MainActivity) {
+            ((requireActivity() as MainActivity).showBottomNavView())
+        }
+    }
+
     fun onItemClickListener(favDish: FavDish) {
         Toast.makeText(
             requireActivity(),
             "Clicked Item : ${favDish.id} :: ${favDish.title}",
             Toast.LENGTH_LONG
         ).show()
-        findNavController().navigate(FavoriteDishesFragmentDirections.actionNavigationFavoriteDishesToDishDetailsFragment(favDish))
+        findNavController().navigate(
+            FavoriteDishesFragmentDirections.actionNavigationFavoriteDishesToDishDetailsFragment(
+                favDish
+            )
+        )
     }
 
     override fun onDestroyView() {
