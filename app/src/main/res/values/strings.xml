@@ -21,4 +21,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="time_for_preparation">The approx time require to cook the dish is %1$s minutes.</string>
     <string name="favorites_yet_to_be_added">Favorites yet to be added !</string>
+    <string name="edit_dish">Edit Dish</string>
+    <string name="delete_dish">Delete Dish</string>
 </resources>

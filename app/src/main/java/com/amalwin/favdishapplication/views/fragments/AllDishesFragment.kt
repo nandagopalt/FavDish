@@ -6,7 +6,6 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.amalwin.favdishapplication.R
@@ -47,9 +46,10 @@ class AllDishesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         allDishesBinding.rvAllDish.layoutManager = GridLayoutManager(requireActivity(), 2)
-        allDishListItemAdapter = AllDishListItemsAdapter { selectedFavDish: FavDish ->
-            onListItemSelectionListener(selectedFavDish)
-        }
+        allDishListItemAdapter =
+            AllDishListItemsAdapter({ selectedFavDish: FavDish, operation: String ->
+                onListItemSelectionListener(selectedFavDish, operation)
+            }, isMoreRequired = true)
         allDishesBinding.rvAllDish.adapter = allDishListItemAdapter
 
         favDishAddUpdateViewModel.favDishItemsList.observe(viewLifecycleOwner) {
@@ -87,12 +87,33 @@ class AllDishesFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun onListItemSelectionListener(favDish: FavDish) {
+    fun onListItemSelectionListener(favDish: FavDish, operation: String) {
         Toast.makeText(requireActivity(), favDish.title, Toast.LENGTH_LONG).show()
-        val action = AllDishesFragmentDirections.actionNavigationAllDishesToDishDetailsFragment(favDish)
-        findNavController().navigate(action)
+        when (operation) {
+            "Navigate" -> {
+                val action =
+                    AllDishesFragmentDirections.actionNavigationAllDishesToDishDetailsFragment(
+                        favDish
+                    )
+                findNavController().navigate(action)
+            }
+            "Edit" -> {
+                Toast.makeText(requireActivity(), "Edit Dish", Toast.LENGTH_LONG).show()
+                val intent: Intent = Intent(requireActivity(), AddUpdateDishActivity::class.java)
+                intent.putExtra("selected_dish", favDish)
+                startActivity(intent)
+            }
+            "Delete" -> {
+                Toast.makeText(requireActivity(), "Delete Dish", Toast.LENGTH_LONG).show()
+            }
+        }
 
     }
+
+    /*fun showPopUpMenu() {
+        val popUpMenu: PopupMenu = PopupMenu(requireActivity(), allDishesBinding.rvAllDish.)
+    }*/
+
 
     override fun onResume() {
         super.onResume()

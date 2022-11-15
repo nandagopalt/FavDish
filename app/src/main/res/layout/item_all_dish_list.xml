@@ -11,6 +11,7 @@
     app:cardElevation="@dimen/_10sdp"
     app:cardUseCompatPadding="true">
 
+
     <LinearLayout
         android:id="@+id/all_dish_card"
         android:layout_width="match_parent"
@@ -18,14 +19,34 @@
         android:background="?attr/selectableItemBackground"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/iv_all_dish_image"
+        <FrameLayout
+            android:id="@+id/fl_image_parent"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_120sdp"
-            android:layout_margin="@dimen/_1sdp"
-            android:contentDescription="@string/app_name"
-            android:scaleType="fitXY"
-            tools:src="@drawable/ic_add_photo" />
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_all_dish_image"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_120sdp"
+                android:layout_margin="@dimen/_1sdp"
+                android:contentDescription="@string/app_name"
+                android:scaleType="fitXY"
+                tools:src="@color/secondaryColor" />
+
+            <ImageButton
+                android:id="@+id/iv_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="?attr/selectableItemBackground"
+                android:padding="@dimen/_5sdp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_more">
+
+            </ImageButton>
+
+        </FrameLayout>
 
         <TextView
             android:id="@+id/tv_all_dish_title"

@@ -47,9 +47,9 @@ class FavoriteDishesFragment : Fragment() {
                         favoriteDishBinding!!.tvNoFavoritesAdded.visibility = View.GONE
                         layoutManager =
                             GridLayoutManager(requireActivity(), 2)
-                        favoriteListAdapter = AllDishListItemsAdapter { selectedFavDish: FavDish ->
-                            onItemClickListener(selectedFavDish)
-                        }
+                        favoriteListAdapter = AllDishListItemsAdapter({ selectedFavDish: FavDish, operation :String ->
+                            onItemClickListener(selectedFavDish, operation)
+                        }, isMoreRequired = false)
                         favoriteListAdapter.reLoadAllDishList(favDishes)
                         adapter = favoriteListAdapter
                         /*for (item in it) {
@@ -71,7 +71,7 @@ class FavoriteDishesFragment : Fragment() {
         }
     }
 
-    fun onItemClickListener(favDish: FavDish) {
+    fun onItemClickListener(favDish: FavDish, operation: String) {
         Toast.makeText(
             requireActivity(),
             "Clicked Item : ${favDish.id} :: ${favDish.title}",

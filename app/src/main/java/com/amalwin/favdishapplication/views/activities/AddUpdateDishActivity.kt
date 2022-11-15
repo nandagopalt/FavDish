@@ -53,6 +53,7 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var activityAddUpdateDishBinding: ActivityAddUpdateDishBinding
     private var imagePath: String? = ""
     private lateinit var customListDialog: Dialog
+    private var favDishDetails: FavDish? = null
     private val favDishViewModel: FavDishAddUpdateViewModel by viewModels {
         FavDishAddUpdateViewModelFactory((application as FavDishApplication).repository)
     }
@@ -61,9 +62,17 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         activityAddUpdateDishBinding = ActivityAddUpdateDishBinding.inflate(layoutInflater)
         setContentView(activityAddUpdateDishBinding.root)
+
         setActionBar()
 
-
+        favDishDetails = intent.getParcelableExtra("selected_dish")
+        favDishDetails.let {
+            supportActionBar!!.title = "Edit Dish"
+            Glide.with(this@AddUpdateDishActivity).load(favDishDetails!!.imagePath)
+                .centerCrop()
+                .placeholder(R.color.secondaryColor)
+                .into(activityAddUpdateDishBinding.ivPicture)
+        }
 
         activityAddUpdateDishBinding.apply {
             this.ivTakePicture.setOnClickListener(this@AddUpdateDishActivity)
@@ -95,13 +104,15 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
             R.id.btn_add_dish -> {
                 val title = activityAddUpdateDishBinding.etTitle.text.toString().trim { it <= ' ' }
                 val type = activityAddUpdateDishBinding.etType.text.toString().trim { it <= ' ' }
-                val category = activityAddUpdateDishBinding.etCategory.text.toString().trim { it <= ' ' }
+                val category =
+                    activityAddUpdateDishBinding.etCategory.text.toString().trim { it <= ' ' }
                 val ingredients =
                     activityAddUpdateDishBinding.etIngredients.text.toString().trim { it <= ' ' }
                 val cookingTime =
                     activityAddUpdateDishBinding.etCookingTime.text.toString().trim { it <= ' ' }
                 val directionsToCook =
-                    activityAddUpdateDishBinding.etDirectionToCook.text.toString().trim { it <= ' ' }
+                    activityAddUpdateDishBinding.etDirectionToCook.text.toString()
+                        .trim { it <= ' ' }
 
                 when {
                     TextUtils.isEmpty(imagePath) -> {
@@ -414,6 +425,8 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
 
         if (customListDialog.isShowing) customListDialog.dismiss()
     }
+
+
 }
 
 
