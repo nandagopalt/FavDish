@@ -113,15 +113,18 @@ class AllDishesFragment : Fragment() {
                     .setCancelable(false)
                     .setPositiveButton(
                         "Confirm"
-                    ) { _, _ ->
+                    ) { dialogInterface, _ ->
                         Toast.makeText(requireActivity(), "Confirm Delete", Toast.LENGTH_LONG)
                             .show()
+                        favDishAddUpdateViewModel.deleteFavDishDetails(favDish)
+                        dialogInterface.dismiss()
                     }
-                    .setNegativeButton("Cancel") { _, _ ->
+                    .setNegativeButton("Cancel") { dialogInterface, _ ->
                         Toast.makeText(requireActivity(), "Cancel Delete", Toast.LENGTH_LONG)
                             .show()
+                        dialogInterface.dismiss()
                     }
-                alertDialog.show()
+                alertDialog.create().show()
             }
         }
 
