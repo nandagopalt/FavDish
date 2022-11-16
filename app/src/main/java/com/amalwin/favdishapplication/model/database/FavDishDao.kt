@@ -16,7 +16,7 @@ interface FavDishDao {
     fun fetchFavDetailsData(): Flow<List<FavDish>>
 
     @Update
-    suspend fun updateFavDetailsData(favDish: FavDish)
+    suspend fun updateFavDetailsData(favDish: FavDish?)
 
     @Query("SELECT * FROM fav_dish_table WHERE is_fav_dish = 1")
     fun fetchFavorites(): Flow<List<FavDish>>

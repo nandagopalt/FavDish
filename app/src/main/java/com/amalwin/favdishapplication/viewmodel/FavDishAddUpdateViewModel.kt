@@ -12,7 +12,7 @@ class FavDishAddUpdateViewModel(private val favDishRepository: FavDishRepository
 
     val favDishItemsList: LiveData<List<FavDish>> = favDishRepository.favDetailsList.asLiveData()
 
-    fun updateFavDishDetails(favDish: FavDish) = viewModelScope.launch {
+    fun updateFavDishDetails(favDish: FavDish?) = viewModelScope.launch {
         favDishRepository.updateFavDishInformation(favDish)
     }
 }

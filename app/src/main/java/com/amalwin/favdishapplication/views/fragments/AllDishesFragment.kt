@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -105,6 +106,22 @@ class AllDishesFragment : Fragment() {
             }
             "Delete" -> {
                 Toast.makeText(requireActivity(), "Delete Dish", Toast.LENGTH_LONG).show()
+                val alertDialog = AlertDialog.Builder(requireActivity())
+                    .setMessage(resources.getString(R.string.delete_alert_message, favDish.title))
+                    .setTitle(resources.getString(R.string.delete_alert_title))
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setCancelable(false)
+                    .setPositiveButton(
+                        "Confirm"
+                    ) { _, _ ->
+                        Toast.makeText(requireActivity(), "Confirm Delete", Toast.LENGTH_LONG)
+                            .show()
+                    }
+                    .setNegativeButton("Cancel") { _, _ ->
+                        Toast.makeText(requireActivity(), "Cancel Delete", Toast.LENGTH_LONG)
+                            .show()
+                    }
+                alertDialog.show()
             }
         }
 

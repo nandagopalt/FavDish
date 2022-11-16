@@ -23,4 +23,7 @@
     <string name="favorites_yet_to_be_added">Favorites yet to be added !</string>
     <string name="edit_dish">Edit Dish</string>
     <string name="delete_dish">Delete Dish</string>
+    <string name="delete_alert_message">"Are you sure want to delete %1$s"</string>
+    <string name="delete_alert_title">Delete</string>
+    <string name="update_dish">Update Dish</string>
 </resources>
