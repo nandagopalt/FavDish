@@ -4,6 +4,13 @@
     <item
         android:id="@+id/add_dish"
         android:icon="@drawable/ic_baseline_add_24"
+        android:orderInCategory="102"
         android:title="@string/add_dish"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/filter_dish"
+        android:icon="@drawable/ic_filter"
+        android:orderInCategory="101"
+        android:title="@string/filter"
         app:showAsAction="always" />
 </menu>

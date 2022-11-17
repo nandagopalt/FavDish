@@ -19,6 +19,10 @@ class FavDishAddUpdateViewModel(private val favDishRepository: FavDishRepository
     fun deleteFavDishDetails(favDish: FavDish) = viewModelScope.launch {
         favDishRepository.deleteFavDishInformation(favDish)
     }
+
+    fun filterFavDishDetails(filter: String): LiveData<List<FavDish>> =
+        favDishRepository.fetchFilteredFavDishInformation(filter).asLiveData()
+
 }
 
 class FavDishAddUpdateViewModelFactory(private val favDishRepository: FavDishRepository) :

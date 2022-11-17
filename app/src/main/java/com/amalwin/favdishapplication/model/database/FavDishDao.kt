@@ -20,4 +20,7 @@ interface FavDishDao {
 
     @Delete
     suspend fun deleteFavDetailsData(favDish: FavDish)
+
+    @Query("SELECT * FROM fav_dish_table WHERE type = :filter order by id")
+    fun fetchFilteredFavDishData(filter: String): Flow<List<FavDish>>
 }
