@@ -1,5 +1,6 @@
 package com.amalwin.favdishapplication.views.fragments
 
+import android.app.Dialog
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
@@ -36,6 +37,8 @@ class RandomDishFragment : Fragment() {
     private var dishCategory: String = "Other"
     private var dishIngredients: String = ""
     private var isAddedToFavorites: Boolean = false
+
+    private var progressDialog: Dialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -179,8 +182,24 @@ class RandomDishFragment : Fragment() {
         randomDishViewModel._loadingFavDishLiveData.observe(viewLifecycleOwner) { loading ->
             loading?.let {
                 Log.i("Random Dish loading:", "$loading")
+                if (loading && !randomDishBinding!!.srlFavdishParent.isRefreshing) {
+                    showLoadingProgressDialog()
+                } else {
+                    hideLoadingProgressDialog()
+                }
             }
+        }
+    }
 
+    fun showLoadingProgressDialog() {
+        progressDialog = Dialog(requireActivity())
+        progressDialog?.setContentView(R.layout.dialog_custom_progress)
+        progressDialog?.show()
+    }
+
+    fun hideLoadingProgressDialog() {
+        if (progressDialog?.isShowing == true) {
+            progressDialog?.dismiss()
         }
     }
 
