@@ -1,10 +1,10 @@
 package com.amalwin.favdishapplication.views.fragments
 
 import android.graphics.drawable.Drawable
+import android.os.Build
+import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
@@ -33,8 +33,10 @@ class DishDetailsFragment : Fragment() {
         FavDishAddUpdateViewModelFactory((requireActivity().application as FavDishApplication).repository)
     }
 
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -156,6 +158,25 @@ class DishDetailsFragment : Fragment() {
                 }
             }
         }
+    }
+
+    @Suppress("DEPRECATION")
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.dish_details_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    @Suppress("DEPRECATION")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+         when(item.itemId) {
+             R.id.share -> {
+                Toast.makeText(requireActivity(), "Share button clicked !", Toast.LENGTH_LONG)
+                    .show()
+                 return true
+
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onDestroy() {

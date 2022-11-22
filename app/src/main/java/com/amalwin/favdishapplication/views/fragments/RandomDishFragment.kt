@@ -193,6 +193,7 @@ class RandomDishFragment : Fragment() {
 
     fun showLoadingProgressDialog() {
         progressDialog = Dialog(requireActivity())
+        progressDialog?.setCancelable(false)
         progressDialog?.setContentView(R.layout.dialog_custom_progress)
         progressDialog?.show()
     }
