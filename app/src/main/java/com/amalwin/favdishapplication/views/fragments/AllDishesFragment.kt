@@ -122,7 +122,7 @@ class AllDishesFragment : Fragment() {
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setCancelable(false)
                     .setPositiveButton(
-                        "Confirm"
+                        getString(R.string.confirm)
                     ) { dialogInterface, _ ->
                         Toast.makeText(requireActivity(), "Confirm Delete", Toast.LENGTH_LONG)
                             .show()
