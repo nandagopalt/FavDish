@@ -1,10 +1,12 @@
 package com.amalwin.favdishapplication.model.notification
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import androidx.work.Data
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import com.amalwin.favdishapplication.views.activities.MainActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,6 +30,15 @@ class NotifyWorker(context: Context, params: WorkerParameters) : Worker(context,
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = timeInMillis
         return simpleDateFormatter.format(calendar.time)
+    }
+
+    private fun sendNotification() {
+        val notification_id = 0
+        val intent = Intent(applicationContext, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        intent.putExtra("NOTIFICATION_ID", notification_id)
+
+
     }
 
     companion object {
