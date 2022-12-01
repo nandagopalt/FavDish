@@ -43,8 +43,11 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-        startWork()
+        if (intent.hasExtra("NOTIFICATION_ID")) {
+            val notification_id = intent.getIntExtra("NOTIFICATION_ID", 0)
+            binding.navView.selectedItemId = R.id.navigation_random_dishes
+        }
+            startWork()
     }
 
     fun hideBottomNavView() {

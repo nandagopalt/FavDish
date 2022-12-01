@@ -30,4 +30,6 @@
     <string name="select_title_for_filter">Select item to filter</string>
     <string name="share">Share</string>
     <string name="confirm">Confirm</string>
+    <string name="notification_title">Checkout new dish receipes</string>
+    <string name="notification_subtitle">Tap for more details</string>
 </resources>
